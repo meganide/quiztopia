@@ -24,11 +24,17 @@ package:
   individually: true
 
 functions:
-  getBookings:
+  signup:
     handler: src/functions/signup/index.handler
     events:
       - httpApi:
           path: "/api/signup"
+          method: POST
+  signin:
+    handler: src/functions/signin/index.handler
+    events:
+      - httpApi:
+          path: "/api/signin"
           method: POST
 
 resources:
