@@ -1,5 +1,6 @@
 import { errorHandler, zodValidation } from "@/middlewares"
 import { validateToken } from "@/middlewares/auth"
+import { verifyOwner } from "@/middlewares/verifyOwner"
 import { Question, QuestionSchema } from "@/types/questionSchema"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
@@ -7,7 +8,7 @@ import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { saveQuestion, verifyOwner } from "./helpers"
+import { saveQuestion } from "./helpers"
 
 async function addQuestion(
   event: APIGatewayProxyEvent
@@ -15,7 +16,6 @@ async function addQuestion(
   const questionBody = event.body as unknown as Question
 
   try {
-    await verifyOwner(event.username, questionBody.quizId)
     await saveQuestion(questionBody)
     return sendResponse(200, {
       success: true
@@ -39,5 +39,6 @@ export const handler = middy(addQuestion)
   .use(validateToken())
   .use(jsonBodyParser())
   .use(zodValidation(QuestionSchema))
+  .use(verifyOwner())
   .use(errorHandler())
   .handler(addQuestion)
