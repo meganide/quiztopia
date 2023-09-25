@@ -1,5 +1,6 @@
 import { errorHandler, zodValidation } from "@/middlewares"
 import { validateToken } from "@/middlewares/auth"
+import { QuizSchema } from "@/types/quizSchema"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
@@ -31,6 +32,6 @@ async function createQuiz(
 export const handler = middy(createQuiz)
   .use(validateToken())
   .use(jsonBodyParser())
-  // .use(zodValidation(UserSchema))
+  .use(zodValidation(QuizSchema))
   .use(errorHandler())
   .handler(createQuiz)
