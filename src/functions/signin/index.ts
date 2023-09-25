@@ -1,5 +1,4 @@
 import { errorHandler, zodValidation } from "@/middlewares"
-import { createJWT } from "@/middlewares/auth"
 import { User, UserSchema } from "@/types"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
@@ -9,7 +8,9 @@ import { HttpError } from "http-errors"
 
 import { createToken, loginUser } from "./helpers"
 
-async function login(event: APIGatewayProxyEvent) {
+async function login(
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> {
   const userCredentials = event.body as unknown as User
 
   try {
