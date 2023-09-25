@@ -1,4 +1,5 @@
 import { errorHandler, zodValidation } from "@/middlewares"
+import { createJWT } from "@/middlewares/auth"
 import { User, UserSchema } from "@/types"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
@@ -6,18 +7,19 @@ import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { loginUser } from "./helpers"
+import { createToken, loginUser } from "./helpers"
 
-async function login(
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> {
+let username = ""
+
+async function login(event: APIGatewayProxyEvent) {
   const userCredentials = event.body as unknown as User
 
   try {
-    await loginUser(userCredentials)
+    username = await loginUser(userCredentials)
+    const token = createToken(username)
     return sendResponse(200, {
       success: true,
-      token: "123"
+      token
     })
   } catch (error) {
     console.log(error)
