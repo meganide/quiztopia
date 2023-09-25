@@ -9,13 +9,11 @@ import { HttpError } from "http-errors"
 
 import { createToken, loginUser } from "./helpers"
 
-let username = ""
-
 async function login(event: APIGatewayProxyEvent) {
   const userCredentials = event.body as unknown as User
 
   try {
-    username = await loginUser(userCredentials)
+    const username = await loginUser(userCredentials)
     const token = createToken(username)
     return sendResponse(200, {
       success: true,
