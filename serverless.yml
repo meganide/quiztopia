@@ -36,6 +36,12 @@ functions:
       - httpApi:
           path: "/api/signin"
           method: POST
+  createQuiz:
+    handler: src/functions/createQuiz/index.handler
+    events:
+      - httpApi:
+          path: "/api/quiz"
+          method: POST
 
 resources:
   Resources:

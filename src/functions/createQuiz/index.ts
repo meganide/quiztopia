@@ -1,22 +1,24 @@
 import { errorHandler, zodValidation } from "@/middlewares"
-import { User, UserSchema } from "@/types"
+import { validateToken } from "@/middlewares/auth"
+import { Quiz, QuizSchema } from "@/types/quizSchema"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { createUser } from "./helpers"
+import { saveQuiz } from "./helpers"
 
-async function signup(
+async function createQuiz(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
-  const userCredentials = event.body as unknown as User
+  const { quizName } = event.body as unknown as Quiz
 
   try {
-    await createUser(userCredentials)
-    return sendResponse(201, {
-      success: true
+    const quizId = await saveQuiz(event.username, quizName)
+    return sendResponse(200, {
+      success: true,
+      quizId
     })
   } catch (error) {
     console.log(error)
@@ -28,13 +30,14 @@ async function signup(
     }
     return sendResponse(500, {
       success: false,
-      message: "Something went wrong, could not create user."
+      message: "Something went wrong, could not create quiz."
     })
   }
 }
 
-export const handler = middy(signup)
+export const handler = middy(createQuiz)
+  .use(validateToken())
   .use(jsonBodyParser())
-  .use(zodValidation(UserSchema))
+  .use(zodValidation(QuizSchema))
   .use(errorHandler())
-  .handler(signup)
+  .handler(createQuiz)
