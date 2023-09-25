@@ -1,0 +1,50 @@
+service: quiztopia
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: ${env:PROFILE}
+  region: eu-north-1
+  iam:
+    role: ${env:LAMBDA_ROLE}
+  deploymentMethod: direct
+
+useDotenv: true
+
+plugins:
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    exclude: []
+    minify: true
+
+package:
+  individually: true
+
+functions:
+  getBookings:
+    handler: src/functions/signup/index.handler
+    events:
+      - httpApi:
+          path: "/api/signup"
+          method: POST
+
+resources:
+  Resources:
+    Quiztopia:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Quiztopia
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
