@@ -6,17 +6,18 @@ import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { createUser } from "./helpers"
+import { loginUser } from "./helpers"
 
-async function signup(
+async function login(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
   const userCredentials = event.body as unknown as User
 
   try {
-    await createUser(userCredentials)
-    return sendResponse(201, {
-      success: true
+    await loginUser(userCredentials)
+    return sendResponse(200, {
+      success: true,
+      token: "123"
     })
   } catch (error) {
     console.log(error)
@@ -28,13 +29,13 @@ async function signup(
     }
     return sendResponse(500, {
       success: false,
-      message: "Something went wrong, user could not be created."
+      message: "Something went wrong, could not log in."
     })
   }
 }
 
-export const handler = middy(signup)
+export const handler = middy(login)
   .use(jsonBodyParser())
   .use(zodValidation(UserSchema))
   .use(errorHandler())
-  .handler(signup)
+  .handler(login)
