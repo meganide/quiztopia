@@ -18,10 +18,7 @@ export function verifyOwner(): middy.MiddlewareObj<
       const username = handler.event.username
 
       if (!quizId) {
-        return sendResponse(400, {
-          success: false,
-          message: "No quizId provided."
-        })
+        throw new createHttpError.BadRequest("No quizId provided.")
       }
 
       const { Items } = await db
