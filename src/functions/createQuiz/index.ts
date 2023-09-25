@@ -1,18 +1,24 @@
 import { errorHandler, zodValidation } from "@/middlewares"
 import { validateToken } from "@/middlewares/auth"
-import { QuizSchema } from "@/types/quizSchema"
+import { Quiz, QuizSchema } from "@/types/quizSchema"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
+import { saveQuiz } from "./helpers"
+
 async function createQuiz(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
+  const { quizName } = event.body as unknown as Quiz
+
   try {
+    const quizId = await saveQuiz(event.username, quizName)
     return sendResponse(200, {
-      success: true
+      success: true,
+      quizId
     })
   } catch (error) {
     console.log(error)

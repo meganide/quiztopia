@@ -28,7 +28,7 @@ async function signup(
     }
     return sendResponse(500, {
       success: false,
-      message: "Something went wrong, user could not be created."
+      message: "Something went wrong, could not create user."
     })
   }
 }
