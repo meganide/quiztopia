@@ -7,15 +7,16 @@ import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { verifyOwner } from "./helpers"
+import { saveQuestion, verifyOwner } from "./helpers"
 
 async function addQuestion(
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> {
-  const body = event.body as unknown as Question
+  const questionBody = event.body as unknown as Question
 
   try {
-    await verifyOwner(event.username, body.quizId)
+    await verifyOwner(event.username, questionBody.quizId)
+    await saveQuestion(questionBody)
     return sendResponse(200, {
       success: true
     })

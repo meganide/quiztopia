@@ -1,23 +1,7 @@
 import { db } from "@/services"
+import { Question } from "@/types/questionSchema"
 import createHttpError from "http-errors"
-
-// export async function saveQuestion(questionBody: Question) {
-//   const id = nanoid()
-
-//   await db
-//     .put({
-//       TableName: "Quiztopia",
-//       Item: {
-//         PK: `q#${id}`,
-//         SK: `u#${username}`,
-//         EntityType: "Quiz",
-//         QuizName: quizName
-//       }
-//     })
-//     .promise()
-
-//   return id
-// }
+import { nanoid } from "nanoid"
 
 export async function verifyOwner(username: string, quizId: string) {
   const { Items } = await db
@@ -30,13 +14,34 @@ export async function verifyOwner(username: string, quizId: string) {
     })
     .promise()
 
-  console.log("Item: ", Items)
-
   if (!Items || Items?.length === 0) {
     throw new createHttpError.NotFound("Quiz not found.")
   }
 
-  if (Items[0].SK !== `u#${username}`) {
+  const isOwner = Items.some(
+    (item) => item.SK === `u#${username}` && item.EntityType === "Quiz"
+  )
+
+  if (!isOwner) {
     throw new createHttpError.Forbidden("You are not the owner of this quiz.")
   }
+}
+
+export async function saveQuestion(questionBody: Question) {
+  const questionId = nanoid()
+  const { quizId, answer, location, question } = questionBody
+
+  const params = {
+    TableName: "Quiztopia",
+    Item: {
+      PK: `q#${quizId}`,
+      SK: `qu#${questionId}`,
+      EntityType: "Question",
+      Question: question,
+      Answer: answer,
+      Location: { location }
+    }
+  }
+
+  await db.put(params).promise()
 }
