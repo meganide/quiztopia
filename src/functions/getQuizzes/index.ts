@@ -4,25 +4,16 @@ import middy from "@middy/core"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { getQuizQuestions } from "./helpers"
+import { getAllQuizzes } from "./helpers"
 
-async function getQuiz(
+async function getQuizzes(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
-  const { quizId } = event.pathParameters as { quizId: string | undefined }
-
-  if (!quizId) {
-    return sendResponse(400, {
-      success: false,
-      message: "Quiz id is required."
-    })
-  }
-
   try {
-    const questions = await getQuizQuestions(quizId)
+    const quizzes = await getAllQuizzes()
     return sendResponse(200, {
       success: true,
-      questions
+      quizzes
     })
   } catch (error) {
     console.log(error)
@@ -34,9 +25,9 @@ async function getQuiz(
     }
     return sendResponse(500, {
       success: false,
-      message: "Something went wrong, could not get quiz questions."
+      message: "Something went wrong, could not get quizzes."
     })
   }
 }
 
-export const handler = middy(getQuiz).use(errorHandler()).handler(getQuiz)
+export const handler = middy(getQuizzes).use(errorHandler()).handler(getQuizzes)
