@@ -60,6 +60,12 @@ functions:
       - httpApi:
           path: "/api/quiz/{quizId}"
           method: GET
+  getQuizzes:
+    handler: src/functions/getQuizzes/index.handler
+    events:
+      - httpApi:
+          path: "/api/quiz"
+          method: GET
 
 resources:
   Resources:
