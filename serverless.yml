@@ -72,12 +72,12 @@ functions:
       - httpApi:
           path: "/api/quiz/{quizId}/scores"
           method: POST
-  # getLeaderboard:
-  #   handler: src/functions/getLeaderboard/index.handler
-  #   events:
-  #     - httpApi:
-  #         path: "/api/quiz/{quizId}/leaderboard"
-  #         method: GET
+  getLeaderboard:
+    handler: src/functions/getLeaderboard/index.handler
+    events:
+      - httpApi:
+          path: "/api/quiz/{quizId}/leaderboard"
+          method: GET
 
 resources:
   Resources:

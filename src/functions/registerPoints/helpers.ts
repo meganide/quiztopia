@@ -11,7 +11,8 @@ export async function savePoints(
       PK: `q#${quizId}`,
       SK: `u#${username}#p#${points}`,
       EntityType: "Points",
-      Points: points
+      Points: points,
+      User: username
     }
   }
 

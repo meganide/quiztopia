@@ -1,21 +1,16 @@
-import { errorHandler, zodValidation } from "@/middlewares"
-import { validateToken } from "@/middlewares/auth"
-import { Point, PointSchema } from "@/types/pointSchema"
+import { errorHandler } from "@/middlewares"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
-import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
 import { getQuizById } from "../deleteQuiz/helpers"
-import { savePoints } from "./helpers"
+import { getLeaderboards } from "./helpers"
 
-async function registerPoints(
+async function getLeaderboard(
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyResultV2> {
   const { quizId } = event.pathParameters as { quizId: string | undefined }
-  const { points } = event.body as unknown as Point
-  const username = event.username
 
   if (!quizId) {
     return sendResponse(400, {
@@ -25,10 +20,21 @@ async function registerPoints(
   }
 
   try {
-    await getQuizById(quizId)
-    await savePoints(quizId, username, points)
+    const quiz = await getQuizById(quizId)
+    const quizNameObj = quiz.find((item) => item.QuizName)
+
+    if (!quizNameObj) {
+      return sendResponse(404, {
+        success: false,
+        message: "Quiz name does not exist."
+      })
+    }
+
+    const leaderboards = await getLeaderboards(quizId)
     return sendResponse(200, {
-      success: true
+      success: true,
+      quizName: quizNameObj.QuizName,
+      leaderboards
     })
   } catch (error) {
     console.log(error)
@@ -40,14 +46,11 @@ async function registerPoints(
     }
     return sendResponse(500, {
       success: false,
-      message: "Something went wrong, could not register points."
+      message: "Something went wrong, could not get leaderboards."
     })
   }
 }
 
-export const handler = middy(registerPoints)
-  .use(validateToken())
-  .use(jsonBodyParser())
-  .use(zodValidation(PointSchema))
+export const handler = middy(getLeaderboard)
   .use(errorHandler())
-  .handler(registerPoints)
+  .handler(getLeaderboard)
