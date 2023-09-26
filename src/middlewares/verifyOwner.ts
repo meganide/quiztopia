@@ -1,12 +1,6 @@
 import { db } from "@/services"
-import { sendResponse } from "@/utils"
 import middy from "@middy/core"
-import {
-  APIGatewayProxyEvent,
-  APIGatewayProxyEventV2,
-  APIGatewayProxyResult,
-  APIGatewayProxyResultV2
-} from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import createHttpError from "http-errors"
 
 type QuizId = { quizId: string | undefined }
@@ -24,8 +18,6 @@ export function verifyOwner(): middy.MiddlewareObj<
       } else if (handler.event.routeKey === "DELETE /api/quiz/{quizId}") {
         quizId = handler.event.pathParameters?.quizId
       }
-
-      const username = handler.event.username
 
       if (!quizId) {
         throw new createHttpError.BadRequest("No quizId provided.")
@@ -45,6 +37,7 @@ export function verifyOwner(): middy.MiddlewareObj<
         throw new createHttpError.NotFound("Quiz not found.")
       }
 
+      const username = handler.event.username
       const isOwner = Items.some(
         (item) => item.SK === `u#${username}` && item.EntityType === "Quiz"
       )
