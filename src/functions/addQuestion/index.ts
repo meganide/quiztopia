@@ -5,19 +5,19 @@ import { Question, QuestionSchema } from "@/types/questionSchema"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
 import { saveQuestion } from "./helpers"
 
 async function addQuestion(
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> {
+  event: APIGatewayProxyEventV2
+): Promise<APIGatewayProxyResultV2> {
   const questionBody = event.body as unknown as Question
 
   try {
     await saveQuestion(questionBody)
-    return sendResponse(200, {
+    return sendResponse(201, {
       success: true
     })
   } catch (error) {

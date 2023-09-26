@@ -1,11 +1,11 @@
 import middy from "@middy/core"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import createError from "http-errors"
 import z from "zod"
 
 export function zodValidation(
   schema: z.AnyZodObject | z.ZodOptional<z.AnyZodObject>
-): middy.MiddlewareObj<APIGatewayProxyEvent, APIGatewayProxyResult> {
+): middy.MiddlewareObj<APIGatewayProxyEventV2, APIGatewayProxyResultV2> {
   return {
     before: async (handler) => {
       try {

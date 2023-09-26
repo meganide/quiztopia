@@ -48,6 +48,12 @@ functions:
       - httpApi:
           path: "/api/quiz/question"
           method: POST
+  deleteQuiz:
+    handler: src/functions/deleteQuiz/index.handler
+    events:
+      - httpApi:
+          path: "/api/quiz/{quizId}"
+          method: DELETE
 
 resources:
   Resources:

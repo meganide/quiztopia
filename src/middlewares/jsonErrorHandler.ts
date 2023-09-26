@@ -1,11 +1,11 @@
 import middy from "@middy/core"
 import httpErrorHandler from "@middy/http-error-handler"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
 function jsonErrorHandler(): middy.MiddlewareObj<
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2
 > {
   return {
     onError: async (handler) => {

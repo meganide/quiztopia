@@ -1,21 +1,23 @@
 import { db } from "@/services"
-import { sendResponse } from "@/utils"
 import middy from "@middy/core"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import createHttpError from "http-errors"
 
 type QuizId = { quizId: string | undefined }
 
 export function verifyOwner(): middy.MiddlewareObj<
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2
 > {
   return {
     before: async (handler) => {
-      const quizIdBody = handler.event.body as unknown as QuizId
-      const quizIdParams = handler.event.pathParameters?.quizId
-      const quizId = quizIdBody?.quizId || quizIdParams
-      const username = handler.event.username
+      let quizId
+
+      if (handler.event.routeKey === "POST /api/quiz/question") {
+        quizId = (handler.event.body as unknown as QuizId)?.quizId
+      } else if (handler.event.routeKey === "DELETE /api/quiz/{quizId}") {
+        quizId = handler.event.pathParameters?.quizId
+      }
 
       if (!quizId) {
         throw new createHttpError.BadRequest("No quizId provided.")
@@ -35,6 +37,7 @@ export function verifyOwner(): middy.MiddlewareObj<
         throw new createHttpError.NotFound("Quiz not found.")
       }
 
+      const username = handler.event.username
       const isOwner = Items.some(
         (item) => item.SK === `u#${username}` && item.EntityType === "Quiz"
       )
