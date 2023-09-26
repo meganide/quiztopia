@@ -14,8 +14,6 @@ export async function getQuizById(quizId: string) {
     })
     .promise()
 
-  console.log(Items)
-
   if (!Items || Items.length === 0) {
     throw new createHttpError.NotFound("Quiz does not exist.")
   }

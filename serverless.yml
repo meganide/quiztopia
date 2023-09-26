@@ -54,6 +54,12 @@ functions:
       - httpApi:
           path: "/api/quiz/{quizId}"
           method: DELETE
+  getQuiz:
+    handler: src/functions/getQuiz/index.handler
+    events:
+      - httpApi:
+          path: "/api/quiz/{quizId}"
+          method: GET
 
 resources:
   Resources:
