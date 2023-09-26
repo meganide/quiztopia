@@ -7,7 +7,7 @@ import jsonBodyParser from "@middy/http-json-body-parser"
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
-import { removeQuiz } from "./helpers"
+import { createDeleteExpressions, getQuizById, removeQuiz } from "./helpers"
 
 async function deleteQuiz(
   event: APIGatewayProxyEventV2
@@ -15,7 +15,9 @@ async function deleteQuiz(
   const { quizId } = event.pathParameters as { quizId: string }
 
   try {
-    await removeQuiz(quizId)
+    const quiz = await getQuizById(quizId)
+    const deleteExpressions = createDeleteExpressions(quiz)
+    await removeQuiz(deleteExpressions)
     return sendResponse(200, {
       success: true
     })
