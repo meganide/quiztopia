@@ -1,6 +1,6 @@
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import jwt, { JwtPayload } from "jsonwebtoken"
 
 type TokenPayload =
@@ -10,8 +10,8 @@ type TokenPayload =
     })
 
 export function validateToken(): middy.MiddlewareObj<
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2
 > {
   return {
     before: (handler) => {

@@ -3,14 +3,14 @@ import { User, UserSchema } from "@/types"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda"
 import { HttpError } from "http-errors"
 
 import { createUser } from "./helpers"
 
 async function signup(
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> {
+  event: APIGatewayProxyEventV2
+): Promise<APIGatewayProxyResultV2> {
   const userCredentials = event.body as unknown as User
 
   try {

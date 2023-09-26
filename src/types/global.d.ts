@@ -1,7 +1,7 @@
 import "aws-lambda"
 
 declare module "aws-lambda" {
-  export interface APIGatewayProxyEventBase<TAuthorizerContext> {
+  export interface APIGatewayProxyEventV2WithRequestContext<TRequestContext> {
     username: string
   }
 }

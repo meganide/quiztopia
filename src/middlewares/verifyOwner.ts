@@ -1,20 +1,30 @@
 import { db } from "@/services"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
+import {
+  APIGatewayProxyEvent,
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResult,
+  APIGatewayProxyResultV2
+} from "aws-lambda"
 import createHttpError from "http-errors"
 
 type QuizId = { quizId: string | undefined }
 
 export function verifyOwner(): middy.MiddlewareObj<
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult
+  APIGatewayProxyEventV2,
+  APIGatewayProxyResultV2
 > {
   return {
     before: async (handler) => {
-      const quizIdBody = handler.event.body as unknown as QuizId
-      const quizIdParams = handler.event.pathParameters?.quizId
-      const quizId = quizIdBody?.quizId || quizIdParams
+      let quizId
+
+      if (handler.event.routeKey === "POST /api/quiz/question") {
+        quizId = (handler.event.body as unknown as QuizId)?.quizId
+      } else if (handler.event.routeKey === "DELETE /api/quiz/{quizId}") {
+        quizId = handler.event.pathParameters?.quizId
+      }
+
       const username = handler.event.username
 
       if (!quizId) {
