@@ -2,17 +2,17 @@ import { db } from "@/services"
 import createHttpError from "http-errors"
 
 export async function getQuizQuestions(quizId: string) {
-  const { Items } = await db
-    .query({
-      TableName: "Quiztopia",
-      KeyConditionExpression: "PK = :pk AND begins_with(SK, :sk)",
-      ExpressionAttributeValues: {
-        ":pk": `q#${quizId}`,
-        ":sk": "qu#"
-      },
-      ProjectionExpression: "Question"
-    })
-    .promise()
+  const params = {
+    TableName: "Quiztopia",
+    KeyConditionExpression: "PK = :pk AND begins_with(SK, :sk)",
+    ExpressionAttributeValues: {
+      ":pk": `q#${quizId}`,
+      ":sk": "qu#"
+    },
+    ProjectionExpression: "Question"
+  }
+
+  const { Items } = await db.query(params).promise()
 
   if (!Items || Items.length === 0) {
     throw new createHttpError.NotFound(

@@ -3,20 +3,20 @@ import { DocumentClient } from "aws-sdk/clients/dynamodb"
 import createHttpError from "http-errors"
 
 export async function getLeaderboards(quizId: string) {
-  const { Items } = await db
-    .scan({
-      TableName: "Quiztopia",
-      FilterExpression: "PK = :pk AND :entityType = EntityType",
-      ExpressionAttributeValues: {
-        ":pk": `q#${quizId}`,
-        ":entityType": "Points"
-      },
-      ExpressionAttributeNames: {
-        "#user": "User"
-      },
-      ProjectionExpression: "#user, Points"
-    })
-    .promise()
+  const params = {
+    TableName: "Quiztopia",
+    FilterExpression: "PK = :pk AND :entityType = EntityType",
+    ExpressionAttributeValues: {
+      ":pk": `q#${quizId}`,
+      ":entityType": "Points"
+    },
+    ExpressionAttributeNames: {
+      "#user": "User"
+    },
+    ProjectionExpression: "#user, Points"
+  }
+
+  const { Items } = await db.scan(params).promise()
 
   if (!Items || Items.length === 0) {
     throw new createHttpError.NotFound("No quizzes exist.")
