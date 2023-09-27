@@ -1,0 +1,311 @@
+_type: export
+__export_format: 4
+__export_date: 2023-09-27T12:37:32.349Z
+__export_source: insomnia.desktop.app:v2023.5.8
+resources:
+  - _id: req_af0a26baadd34c488085d7e72995827c
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817381455
+    created: 1695665064202
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/signup
+    name: Signup
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "renas2",
+        	"password": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/2023.5.8
+    authentication: {}
+    metaSortKey: -1695665064202
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    parentId: null
+    modified: 1695665061907
+    created: 1695665061907
+    name: Quiztopia
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_bda3fba977764f05a6f75049203ef326
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817395160
+    created: 1695673300312
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/signin
+    name: Signin
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"username": "renas",
+        	"password": "123456"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/2023.5.8
+    authentication: {}
+    metaSortKey: -1695525689163.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dfed7e5c78e94472a188fbc9f2f83078
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817512879
+    created: 1695676622041
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz
+    name: Create Quiz
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"quizName": "pokemon"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_d835fa016c8d4b89a29249e7c10d91b0
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: false
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzIiwiaWF0IjoxNjk1ODE3NDA1fQ.pd53QBlfCvlmPLe1CO8xq-gDPoNnAfTeSB24iJBWo8U
+    metaSortKey: -1695456001644.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f1d0ad7f3c7b4d38b2a508192638ebef
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817553417
+    created: 1695680916238
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz/question
+    name: Create Question
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"quizId": "3vr4VnAiZd7ANMeGCSjHF",
+        	"question": "Who is the blue starter pokemon?",
+        	"answer": "Squirtle",
+        	"location": {
+        		"longitude": 52.77,
+        		"latitude": 100.32
+        	}
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_d835fa016c8d4b89a29249e7c10d91b0
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: false
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzIiwiaWF0IjoxNjk1ODE3NDA1fQ.pd53QBlfCvlmPLe1CO8xq-gDPoNnAfTeSB24iJBWo8U
+    metaSortKey: -1695421157884.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dc8477e0ad06473b80b5deef90c50869
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695727366089
+    created: 1695721631319
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz/3HHaiRp2BOoSOJIU3CsfR
+    name: Delete Question
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: false
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzMiIsImlhdCI6MTY5NTcyNjUyM30.ks51UWwLhZ3h3PF1yW5MlM1qO6aEXhWpprfw2fhWpSY
+    metaSortKey: -1695403736004.8125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9decb00880564bc69e27b3276d6cdc5d
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817532475
+    created: 1695726931575
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz/3vr4VnAiZd7ANMeGCSjHF
+    name: Get Quiz
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: true
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzMiIsImlhdCI6MTY5NTcyNjUyM30.ks51UWwLhZ3h3PF1yW5MlM1qO6aEXhWpprfw2fhWpSY
+    metaSortKey: -1695395025064.9062
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_26d7f133c64f497b9bf82e7aa4e4631b
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695732146490
+    created: 1695728407158
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz
+    name: Get Quizzes
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: true
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzMiIsImlhdCI6MTY5NTcyNjUyM30.ks51UWwLhZ3h3PF1yW5MlM1qO6aEXhWpprfw2fhWpSY
+    metaSortKey: -1695390669594.9531
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_3d250256ac1b41a3aa0a6be8d824f1a4
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817606783
+    created: 1695731088932
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz/3vr4VnAiZd7ANMeGCSjHF/scores
+    name: Register Points
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"points": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: false
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzIiwiaWF0IjoxNjk1NzMzMjYzfQ.wnm0NMd_KqcHt4K6wvwXx9NRFeZoZFGBVxcNJzeTfdo
+    metaSortKey: -1695388491859.9766
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_646b541488024966a33ec3c88ad6f9d5
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695817611150
+    created: 1695732134251
+    url: https://pvc0szqle2.execute-api.eu-north-1.amazonaws.com/api/quiz/3vr4VnAiZd7ANMeGCSjHF/leaderboard
+    name: Get Leaderboards
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/2023.5.8
+        id: pair_da1cdd22013d4f94aa7a684345f3cdb4
+    authentication:
+      type: bearer
+      disabled: true
+      token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbmFzMiIsImlhdCI6MTY5NTcyNjUyM30.ks51UWwLhZ3h3PF1yW5MlM1qO6aEXhWpprfw2fhWpSY
+    metaSortKey: -1695387402992.4883
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_4df2986ddc59f27689b41966b83c9c27b3497d78
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695665061913
+    created: 1695665061913
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1695665061913
+    _type: environment
+  - _id: jar_4df2986ddc59f27689b41966b83c9c27b3497d78
+    parentId: wrk_77cb059ae6b746c3b0c7158e53d7f140
+    modified: 1695665061914
+    created: 1695665061914
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
