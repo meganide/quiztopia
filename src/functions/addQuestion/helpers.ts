@@ -1,5 +1,5 @@
 import { db } from "@/services"
-import { Question } from "@/types/questionSchema"
+import { Question } from "@/types"
 import { nanoid } from "nanoid"
 
 export async function saveQuestion(questionBody: Question) {

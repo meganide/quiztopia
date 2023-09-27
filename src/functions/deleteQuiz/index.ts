@@ -1,6 +1,4 @@
-import { errorHandler } from "@/middlewares"
-import { validateToken } from "@/middlewares/auth"
-import { verifyOwner } from "@/middlewares/verifyOwner"
+import { errorHandler, validateToken, verifyOwner } from "@/middlewares"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"

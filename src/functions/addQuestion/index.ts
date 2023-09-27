@@ -1,7 +1,10 @@
-import { errorHandler, zodValidation } from "@/middlewares"
-import { validateToken } from "@/middlewares/auth"
-import { verifyOwner } from "@/middlewares/verifyOwner"
-import { Question, QuestionSchema } from "@/types/questionSchema"
+import {
+  errorHandler,
+  validateToken,
+  verifyOwner,
+  zodValidation
+} from "@/middlewares"
+import { Question, QuestionSchema } from "@/types"
 import { sendResponse } from "@/utils"
 import middy from "@middy/core"
 import jsonBodyParser from "@middy/http-json-body-parser"
